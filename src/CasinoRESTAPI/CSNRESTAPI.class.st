@@ -18,10 +18,17 @@ CSNRESTAPI class >> extractUi: aRequest [
 	<REST_API: 'GET' versions: #('v1') pattern: 'extractUi'>
 	| gwtModel gwtMooseModel |
 	gwtMooseModel := MooseModel root detect: [:model | model name = 'KitchenGWT' ] ifNone: [^ TeaOutput json value: (TeaResponse notFound)].
+	gwtMooseModel rootFolder: 'D:\Developpement\mse\VerveineJNicolas'. 
 	gwtModel := CSNUICWModel new name: 'Showroom'; yourself.
 	CSNMooseModelCreatorAngular runOn: gwtModel fromSourceModel: gwtMooseModel and: 'D:\Developpement\mse\KitchenGWT\BLCoreIncubatorGwt\src\fr\bl\application.module.xml'.
 	gwtMooseModel install.
 	^ TeaOutput json value: (TeaResponse ok body: (MooseModel root collectWithIndex: [ :model :idx | idx -> model name ]) asDictionary)
+]
+
+{ #category : #'class initialization' }
+CSNRESTAPI class >> hello: aRequest [
+	<REST_API: 'GET' versions: #('v1') pattern: 'hello'>
+	^ 'hello'
 ]
 
 { #category : #'class initialization' }
@@ -33,8 +40,7 @@ CSNRESTAPI class >> initialize [
 CSNRESTAPI class >> loadMse: aRequest [
 	<REST_API: 'GET' versions: #('v1') pattern: 'loadMse'>
 	| gwtMooseModel |
-	gwtMooseModel := FAMIXModel new importFromMSEStream:  'D:\Developpement\mse\VerveineJNicolas\KitchenGWT.mse' asFileReference readStream.
-	gwtMooseModel rootFolder: 'D:\Developpement\mse\VerveineJNicolas'. 
+	gwtMooseModel := FAMIXModel new importFromMSEStream: 'D:\Developpement\mse\VerveineJNicolas\KitchenGWT.mse' asFileReference readStream.
 	gwtMooseModel install.
 	^ TeaOutput json value: (TeaResponse ok body: (MooseModel root collectWithIndex: [ :model :idx | idx -> model name ]) asDictionary)
 ]
