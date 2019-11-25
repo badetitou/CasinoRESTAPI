@@ -8,6 +8,7 @@ Class {
 CSNRESTAPI class >> exportUi: aRequest [
 	<REST_API: 'GET' versions: #('v1') pattern: 'exportUi'>
 	| gwtModel |
+	gwtModel := MooseModel root detect: [:model | model name = 'Showroom' ] ifNone: [^ TeaOutput json value: (TeaResponse notFound)].
 	CSNModelExporterAngularBLSpecific export: gwtModel.
 	^ TeaOutput json value: TeaResponse ok
 ]
@@ -16,6 +17,7 @@ CSNRESTAPI class >> exportUi: aRequest [
 CSNRESTAPI class >> extractUi: aRequest [
 	<REST_API: 'GET' versions: #('v1') pattern: 'extractUi'>
 	| gwtModel gwtMooseModel |
+	gwtMooseModel := MooseModel root detect: [:model | model name = 'KitchenGWT' ] ifNone: [^ TeaOutput json value: (TeaResponse notFound)].
 	gwtModel := CSNUICWModel new name: 'Showroom'; yourself.
 	CSNMooseModelCreatorAngular runOn: gwtModel fromSourceModel: gwtMooseModel and: 'D:\Developpement\mse\KitchenGWT\BLCoreIncubatorGwt\src\fr\bl\application.module.xml'.
 	gwtMooseModel install.
