@@ -33,7 +33,14 @@ CSNRESTAPI class >> hello: aRequest [
 
 { #category : #'class initialization' }
 CSNRESTAPI class >> initialize [
-	TLRESTApiURLPathBuilder useAPIPrefix: 'casino'.
+  TLRESTApiURLPathBuilder useAPIPrefix: 'casino'.
+  TLRESTAPIBuilder buildAPI
+]
+
+{ #category : #'class initialization' }
+CSNRESTAPI class >> inspect [
+	<script>
+	TLWebserver teapot inspect.
 ]
 
 { #category : #'class initialization' }
@@ -43,11 +50,4 @@ CSNRESTAPI class >> loadMse: aRequest [
 	gwtMooseModel := FAMIXModel new importFromMSEStream: 'D:\Developpement\mse\VerveineJNicolas\KitchenGWT.mse' asFileReference readStream.
 	gwtMooseModel install.
 	^ TeaOutput json value: (TeaResponse ok body: (MooseModel root collectWithIndex: [ :model :idx | idx -> model name ]) asDictionary)
-]
-
-{ #category : #'class initialization' }
-CSNRESTAPI class >> start [
-	<script>
-	TLRESTAPIBuilder buildAPI.
-	TLWebserver teapot inspect.
 ]
