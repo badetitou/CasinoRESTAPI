@@ -16,12 +16,19 @@ CSNRESTAPI class >> exportUi: aRequest [
 { #category : #'class initialization' }
 CSNRESTAPI class >> extractUi: aRequest [
 	<REST_API: 'GET' versions: #('v1') pattern: 'extractUi'>
-	| gwtModel gwtMooseModel |
+	| gwtModel gwtMooseModel xml |
 	gwtMooseModel := MooseModel root detect: [:model | model name = 'KitchenGWT' ] ifNone: [^ TeaOutput json value: (TeaResponse notFound)].
-	gwtMooseModel rootFolder: 'D:\Developpement\mse\VerveineJNicolas'. 
+	gwtMooseModel rootFolder: 'D:\Developpement\mse\VerveineJNicolas'.
+	xml := (XMLDOMParser  parse: 'D:\Developpement\mse\BLOmajeGWT\BLOmajeGwt\src\fr\bl\Omaje.module.xml' asFileReference).
+	
 	gwtModel := CSNUICWModel new name: 'Showroom'; yourself.
-	CSNMooseModelCreatorAngular runOn: gwtModel fromSourceModel: gwtMooseModel and: 'D:\Developpement\mse\KitchenGWT\BLCoreIncubatorGwt\src\fr\bl\application.module.xml'.
-	gwtMooseModel install.
+	
+	CSNWebModelJava new
+	sourceModel: gwtMooseModel;
+	xml: xml;
+	createModelIn: gwtModel.
+
+	gwtModel installWithCache: false.
 	^ TeaOutput json value: (TeaResponse ok body: (MooseModel root collectWithIndex: [ :model :idx | idx -> model name ]) asDictionary)
 ]
 
