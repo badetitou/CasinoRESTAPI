@@ -22,7 +22,7 @@ BaselineOfCasinoRESTAPI >> defineDependencies: spec [
 		baseline: 'Casino'
 		with: [ spec
 				loads: #('behavior-bl' 'business');
-				repository: 'github://badetitou/Casino:v1.0.6/src' ]
+				repository: 'github://badetitou/Casino:v1.0.7/src' ]
 ]
 
 { #category : #baselines }
