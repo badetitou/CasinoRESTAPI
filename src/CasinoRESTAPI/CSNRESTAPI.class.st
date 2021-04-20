@@ -51,19 +51,8 @@ CSNRESTAPI class >> generateAngularCodeFromJson: aRequest [
 
 { #category : #'class initialization' }
 CSNRESTAPI class >> hello: aRequest [
-	<REST_API: 'GET' versions: #('v1') pattern: 'generate-angular-code'>
-	| cSNModel metamodel angularExporter |
-	cSNModel := CSNUICWModel new. 
-	metamodel := FMMetaModelBuilder metamodelFromPackages: CSNBModel packagesToProcessToCreateMetamodel , CRFModel packagesToProcessToCreateMetamodel, CSNBuModel packagesToProcessToCreateMetamodel.
-	cSNModel metamodel: metamodel.
-	cSNModel metamodel.
-	cSNModel importFromJSONStream: 'D:\omajeCasino.json' asFileReference readStream.
-	cSNModel installWithCache: false.
-	angularExporter := CSNModelExporterAngularBLSpecific new.
-	angularExporter model: cSNModel.
-	angularExporter exporterAngularConfiguration: CSNExporterAngularCoreWeb2Configuration new.
-	angularExporter export.
-	^ 'Angular code is generated in the root folder of your Pharo image'
+	<REST_API: 'GET' versions: #('v1') pattern: 'hello'>
+	^ 'hello'
 ]
 
 { #category : #'class initialization' }
